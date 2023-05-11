@@ -47,15 +47,15 @@ The demonstration application is a very simple web API hosted in Azure App Servi
 ## Impact on NSG rules for Cosmos database subnet
 ![alt text](images/chaos-nsg-added-deny-rule.png "Added deny rule to Cosmos subnet")
 
-## Telnet to Cosmos database
-![alt text](images/chaos-nsg-telnet-blocked.png "Telnet to database")
-
 ## Flow log setting
 ![alt text](images/chaos-nsg-flow-log-setting.png "Flow log setting")
 
 # Troubleshooting
 ## Jump box subnet NSG block HTTPS
 ![alt text](images/chaos-nsg-deny-jump-https-outbound.png "Jump box deny HTTPS out")
+
+## Telnet to Cosmos database
+![alt text](images/chaos-nsg-telnet-blocked.png "Telnet to database")
 
 ## Flow log from telnet in jump box
 ![alt text](images/chaos-nsg-deny-https-flow-log.png "Flow log")
