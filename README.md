@@ -24,6 +24,12 @@ The demonstration application is a very simple web API hosted in Azure App Servi
 
 ![alt text](images/choas-nsg-fault-test-system.png "Demonstration application")
 
+## Subnets
+![alt text](images/chaos-nsg-subnets.png "Demonstration subnets")
+
+## Cosmos subnet private endpoint policy
+![alt text](images/chaos-nsg-subnet-private-endpoint-policy.png "Subnet private endpoint policy")
+
 
 # Chaos Experiment
 ## Chaos Experiment with NSG fault
@@ -40,3 +46,12 @@ The demonstration application is a very simple web API hosted in Azure App Servi
 
 ## Impact on NSG rules for Cosmos database subnet
 ![alt text](images/chaos-nsg-added-deny-rule.png "Added deny rule to Cosmos subnet")
+
+## Telnet to Cosmos database
+![alt text](images/chaos-nsg-telnet-blocked.png "Telnet to database")
+
+## Flow log setting
+![alt text](images/chaos-nsg-flow-log-setting.png "Flow log setting")
+
+## Flow log from telnet in jump box
+![alt text](images/chaos-nsg-flow-log-jump.png "Flow log")
