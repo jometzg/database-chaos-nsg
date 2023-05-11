@@ -21,3 +21,5 @@ This technique may also be used to simulate the failure of other services too - 
 
 # Demonstration Application
 The demonstration application is a very simple web API hosted in Azure App Services connecting to a Cosmos Database. Both of these services are configured to use a virtual network (VNet) - this VNet configuration is often used to limit access at the network level to Azure services.
+
+![alt text](images/choas-nsg-fault-test-system.png "Demonstration application")
