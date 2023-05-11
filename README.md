@@ -23,3 +23,20 @@ This technique may also be used to simulate the failure of other services too - 
 The demonstration application is a very simple web API hosted in Azure App Services connecting to a Cosmos Database. Both of these services are configured to use a virtual network (VNet) - this VNet configuration is often used to limit access at the network level to Azure services.
 
 ![alt text](images/choas-nsg-fault-test-system.png "Demonstration application")
+
+
+# Chaos Experiment
+## Chaos Experiment with NSG fault
+![alt text](images/chaos-nsg-experiment.png "Experiment overview")
+
+## Fault details
+![alt text](images/chaos-nsg-fault-detail.png "NSG Fault Details")
+
+## Fault Permissions for NSG
+![alt text](images/chaos-nsg-network-contributor.png "Permissions on NSG")
+
+## Fault running
+![alt text](images/chaos-nsg-running.png "NSG Fault now running")
+
+## Impact on NSG rules for Cosmos database subnet
+![alt text](images/chaos-nsg-added-deny-rule.png "Added deny rule to Cosmos subnet")
