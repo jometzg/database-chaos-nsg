@@ -54,4 +54,4 @@ The demonstration application is a very simple web API hosted in Azure App Servi
 ![alt text](images/chaos-nsg-flow-log-setting.png "Flow log setting")
 
 ## Flow log from telnet in jump box
-![alt text](images/chaos-nsg-flow-log-jump.png "Flow log")
+![alt text](images/chaos-nsg-deny-https-flow-log "Flow log")
