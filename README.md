@@ -30,7 +30,7 @@ In the following sections, this application can then be VNet integrated to allow
 
 ## Subnets
 ![alt text](images/chaos-nsg-subnets.png "Demonstration subnets")
-The above subnets are just some samples. In our demonstration, the cosmos database private endpoint is in the "cosmos" subnet and the web app is VNet integrated into the "webapp" subnet.
+The above subnets are just some samples. In our demonstration, the cosmos database private endpoint is in the "cosmos" subnet and the web app is VNet integrated into the "web" subnet.
 
 ## Cosmos subnet private endpoint policy
 
@@ -69,3 +69,9 @@ Private endpoints do not respect network security rules unless the private endpo
 
 ## Flow log from telnet in jump box
 ![alt text](images/chaos-nsg-deny-https-flow-log.png "Flow log")
+
+# The Utility of using an NSG as a proxy for other infrastructure faults
+
+The NSG approach works to block access to the Cosmos database from requests eminating from the web app.
+
+There is, however, one major caveat. NSG deny rules only take effect on new network flows. So, if there is a connection already open between the web app, the NSG deny rule will not come into effect until the web app attempts to open a new connection. Further investigation is needed to see how connection pooling in applications can impact the effectiveness of the use of NSGs on a running application that may use connection pooling.
