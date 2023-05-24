@@ -61,12 +61,20 @@ Private endpoints do not respect network security rules unless the private endpo
 ![alt text](images/chaos-nsg-flow-log-setting.png "Flow log setting")
 
 # Troubleshooting
+
+This section is about how to troubleshoot that is happening when the NSG fault is running.
+
 ## Jump box subnet NSG block HTTPS
+Firstly, you should establish that a new rule gets created when the NSG fault is running and that this is a deny rule for the correct source and targets.
+
 ![alt text](images/chaos-nsg-deny-jump-https-outbound.png "Jump box deny HTTPS out")
+Above is a sample of a new NSG rule having been created during the run. This rule will disappear once the chaos experiment completes.
 
 ## Telnet to Cosmos database
-![alt text](images/chaos-nsg-telnet-blocked.png "Telnet to database")
+In order to establish the effectiveness of a deny NSG rule, then it is often useful to have some means of debugging this. This cannot easily be done form the application code, so one suggestion is to use a virtual machine in the same VNet to test connectivity to the database.
 
+![alt text](images/chaos-nsg-telnet-blocked.png "Telnet to database")
+In the above image, a telnet commannd using the correct port (443 for Cosmos database and potentially 1433 for an Azure SQL Database). You can see that a connection 
 ## Flow log from telnet in jump box
 ![alt text](images/chaos-nsg-deny-https-flow-log.png "Flow log")
 
