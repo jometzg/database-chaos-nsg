@@ -74,7 +74,8 @@ Above is a sample of a new NSG rule having been created during the run. This rul
 In order to establish the effectiveness of a deny NSG rule, then it is often useful to have some means of debugging this. This cannot easily be done form the application code, so one suggestion is to use a virtual machine in the same VNet to test connectivity to the database.
 
 ![alt text](images/chaos-nsg-telnet-blocked.png "Telnet to database")
-In the above image, a telnet commannd using the correct port (443 for Cosmos database and potentially 1433 for an Azure SQL Database). You can see that a connection 
+In the above image, a telnet commannd using the correct port (443 for Cosmos database and potentially 1433 for an Azure SQL Database). You can see that a connection has not been made and will time out at some point. If the connection is not blocked, you will see a response from the service. Bear in mind that this may differ depending on whether you are using an NSG deny rule inbound to the database (in our case "cosmos") subnet or are using an NSG deny rule outbound from the web subnet. In the case of a jumpbox, this is likely to be in its own subnet, so will not be impacted by an outbound deny NSG rule from the web subnet.
+
 ## Flow log from telnet in jump box
 ![alt text](images/chaos-nsg-deny-https-flow-log.png "Flow log")
 
