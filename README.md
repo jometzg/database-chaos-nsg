@@ -103,8 +103,8 @@ In the above flow log, you can see a rule "UserRule_DenyAnyHttpsOutbound" being 
 
 In terms of troubleshooting, these [considerations](https://learn.microsoft.com/en-us/azure/network-watcher/network-watcher-nsg-flow-logging-overview#considerations-for-nsg-flow-logs) states that NSG flow logs do not log across a private link. This means if you decided to put a deny flow log inbound to the Cosmos subnet (instead of outbound from the web subnet), then this flow log will not appear. So bear this in mind when attempting to debug a problem with NSG flow logs.
 
-# Summary on the Utility of using an NSG as a proxy for other infrastructure faults
+# Summary on the utility of using an NSG as a proxy for other infrastructure faults
 
-The NSG approach works to block access to the Cosmos database from requests eminating from the web app.
+The NSG approach works to block access to the Cosmos database from requests eminating from the web app. For this approach to work at all, the target of the chaos experiment needs to be in some way inside a VNet so an network security group can be attached to one of the subnets.
 
 There is, however, one major caveat. NSG deny rules only take effect on new network flows. So, if there is a connection already open between the web app, the NSG deny rule will not come into effect until the web app attempts to open a new connection. Further investigation is needed to see how connection pooling in applications can impact the effectiveness of the use of NSGs on a running application that may use connection pooling.
