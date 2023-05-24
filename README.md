@@ -38,10 +38,9 @@ This configuration is really important.
 
  **_Private endpoints do not respect network security rules unless the private endpoint policy is set. What this means is that, unless this value is set, the NSG rules set, will be ignored by the private endpoint._**
 
-A sample is below:
+A sample is below shows this setting highlighted:
 
 ![alt text](images/chaos-nsg-subnet-private-endpoint-policy.png "Subnet private endpoint policy")
-
 
 # Chaos Experiment
 ## Chaos Experiment with NSG fault
@@ -79,7 +78,12 @@ In order to establish the effectiveness of a deny NSG rule, then it is often use
 In the above image, a telnet commannd using the correct port (443 for Cosmos database and potentially 1433 for an Azure SQL Database). You can see that a connection has not been made and will time out at some point. If the connection is not blocked, you will see a response from the service. Bear in mind that this may differ depending on whether you are using an NSG deny rule inbound to the database (in our case "cosmos") subnet or are using an NSG deny rule outbound from the web subnet. In the case of a jumpbox, this is likely to be in its own subnet, so will not be impacted by an outbound deny NSG rule from the web subnet.
 
 ## Flow log from telnet in jump box
+[NSG Flow logs](https://learn.microsoft.com/en-us/azure/network-watcher/network-watcher-nsg-flow-logging-overview) is a troubleshooting mechanism whereby you can generate logs that are persisted to a storage account - so you verify the effect of a rule on the flow of a specific path.
+
 ![alt text](images/chaos-nsg-deny-https-flow-log.png "Flow log")
+In the above flow log, you can see a rule "UserRule_DenyAnyHttpsOutbound" being executed for a specific flow. So this is outbound from the "web" subnet where the app service is VNet integrated.
+
+In terms of troubleshooting, these [considerations](https://learn.microsoft.com/en-us/azure/network-watcher/network-watcher-nsg-flow-logging-overview#considerations-for-nsg-flow-logs) states that NSG flow logs do not log across a private link. This means if you decided to put a deny flow log inbound to the Cosmos subnet (instead of outbound from the web subnet), then this flow log will not appear. So bear this in mind when attempting to debug a problem with NSG flow logs.
 
 # The Utility of using an NSG as a proxy for other infrastructure faults
 
