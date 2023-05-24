@@ -34,9 +34,11 @@ The above subnets are just some samples. In our demonstration, the cosmos databa
 
 ## Cosmos subnet private endpoint policy
 
-This confiuration is really important. 
+This configuration is really important. 
 
-Private endpoints do not respect network security rules unless the private endpoint policy is set. What this means is that, unless this value is set, the NSG rules set, will be ignored by the private endpoint. A sample is below:
+**Private endpoints do not respect network security rules unless the private endpoint policy is set. What this means is that, unless this value is set, the NSG rules set, will be ignored by the private endpoint. **
+
+A sample is below:
 
 ![alt text](images/chaos-nsg-subnet-private-endpoint-policy.png "Subnet private endpoint policy")
 
