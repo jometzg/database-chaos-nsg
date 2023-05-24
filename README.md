@@ -49,6 +49,7 @@ Above shows the overview of a chaos experiment using NSGs.
 
 ## Fault details
 ![alt text](images/chaos-nsg-fault-detail2.png "NSG Fault Details")
+
 As can be seen above, this is an NSG security fault that is a *Deny Inbound* on port 443 from the source IP range of 10.0.1.0/24 - which is the IP address range of the web subnet. So this rule will deny port 443 requests coming from the web app.
 
 ![alt text](images/chaos-nsg-fault-target.png "NSG Fault Target")
