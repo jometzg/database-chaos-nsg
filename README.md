@@ -24,10 +24,19 @@ The demonstration application is a very simple web API hosted in Azure App Servi
 
 ![alt text](images/choas-nsg-fault-test-system.png "Demonstration application")
 
+Almost any web API that uses a database backend, but [here](https://github.com/Azure-Samples/nodejs-appsvc-cosmosdb-bottleneck) is a sample app that would work well for this demonstration.
+
+In the following sections, this application can then be VNet integrated to allow the use of the [Chaos Studio NSG Fault](https://learn.microsoft.com/en-us/azure/chaos-studio/chaos-studio-fault-library#network-security-group-set-rules)
+
 ## Subnets
 ![alt text](images/chaos-nsg-subnets.png "Demonstration subnets")
 
 ## Cosmos subnet private endpoint policy
+
+This confiuration is really important. 
+
+Private endpoints do not respect network security rules unless the private endpoint policy is set. What this means is that, unless this value is set, the NSG rules set, will be ignored by the private endpoint. A sample is below:
+
 ![alt text](images/chaos-nsg-subnet-private-endpoint-policy.png "Subnet private endpoint policy")
 
 
