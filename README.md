@@ -30,6 +30,7 @@ In the following sections, this application can then be VNet integrated to allow
 
 ## Subnets
 ![alt text](images/chaos-nsg-subnets.png "Demonstration subnets")
+The above subnets are just some samples. In our demonstration, the cosmos database private endpoint is in the "cosmos" subnet and the web app is VNet integrated into the "webapp" subnet.
 
 ## Cosmos subnet private endpoint policy
 
