@@ -20,7 +20,7 @@ There are no Azure SQL Database or Cosmos Database chaos faults and so this appr
 This technique may also be used to simulate the failure of other services too - not just databases. So long as they have some presence on a virtual network and so can have NSGs applied to them.
 
 # Demonstration Application
-The demonstration application is a very simple web API hosted in Azure App Services connecting to a Cosmos Database. Both of these services are configured to use a virtual network (VNet) - this VNet configuration is often used to limit access at the network level to Azure services.
+The demonstration application is a very simple web API hosted in Azure App Services connecting to a Cosmos Database. Both of these services are configured to use a virtual network (VNet) - this VNet configuration is often used to limit access at the network level to Azure services. The API hosted in an app service, uses the app service VNet integration feature. The Cosmos database uses a private endpoint to restrict access to the database from clients in the same or a peered VNet.
 
 ![alt text](images/choas-nsg-fault-test-system.png "Demonstration application")
 
@@ -36,7 +36,7 @@ The above subnets are just some samples. In our demonstration, the cosmos databa
 
 This configuration is really important. 
 
-**Private endpoints do not respect network security rules unless the private endpoint policy is set. What this means is that, unless this value is set, the NSG rules set, will be ignored by the private endpoint. **
+*Private endpoints do not respect network security rules unless the private endpoint policy is set. What this means is that, unless this value is set, the NSG rules set, will be ignored by the private endpoint.
 
 A sample is below:
 
