@@ -45,24 +45,38 @@ A sample is below shows this setting highlighted:
 # Chaos Experiment
 ## Chaos Experiment with NSG fault
 ![alt text](images/chaos-nsg-experiment.png "Experiment overview")
+Above shows the overview of a chaos experiment using NSGs.
 
 ## Fault details
-![alt text](images/chaos-nsg-fault-detail.png "NSG Fault Details")
+![alt text](images/chaos-nsg-fault-detail2.png "NSG Fault Details")
+As can be seen above, this is an NSG security fault that is a *Deny Inbound* on port 443 from the source IP range of 10.0.1.0/24 - which is the IP address range of the web subnet. So this rule will deny port 443 requests coming from the web app.
+
+![alt text](images/chaos-nsg-fault-target.png "NSG Fault Target")
+This is then associated with the jjcosmos network security group which is associated with the "cosmos" subnet in our sample.
+
+There is an alternative approach to denying inbound to the cosmos subnet - to *Deny outbound* from web subnet for the web application. This is not quite so tidy but in terms of this chaos experiment, just as effective.
 
 ## Fault Permissions for NSG
+As explained elsewhere, part of the security model of Chaos Studio, is to give the experiments *managed identities*. You therefore need to setup permissions to the NSG from the experiment.
 ![alt text](images/chaos-nsg-network-contributor.png "Permissions on NSG")
+In the above, the network security group allows the *blockcosmos* experiment to have *Network Contributor* access. If this not done, the experiment will fail to run.
 
 ## Fault running
+The fault running in the portal. Make sure it gets to *Running* status.
 ![alt text](images/chaos-nsg-running.png "NSG Fault now running")
 
 ## Impact on NSG rules for Cosmos database subnet
+You can look at the NSG during the experiment run to see if a new rule has been added to the NSG that corresponds to the experiment.
 ![alt text](images/chaos-nsg-added-deny-rule.png "Added deny rule to Cosmos subnet")
+In the above, you can see that a *DenyCosmos* rule has been added to the NSG.
 
-## Flow log setting
-![alt text](images/chaos-nsg-flow-log-setting.png "Flow log setting")
+## Impact on the application running
+This is a chaos experiment and at some point requests from the web application to the Cosmos databases will be blocked by the NSG. This should cause some failure to be visible in the web application - or at least it should not continue to work.
+
+Having done several runs, it can some time for failures to be noticed. It is believed that the could be because the application may connection pool to the database - an NSG rule change will only impact new network flows, not existing network flows.
+
 
 # Troubleshooting
-
 This section is about how to troubleshoot that is happening when the NSG fault is running.
 
 ## Jump box subnet NSG block HTTPS
@@ -77,6 +91,10 @@ In order to establish the effectiveness of a deny NSG rule, then it is often use
 ![alt text](images/chaos-nsg-telnet-blocked.png "Telnet to database")
 In the above image, a telnet commannd using the correct port (443 for Cosmos database and potentially 1433 for an Azure SQL Database). You can see that a connection has not been made and will time out at some point. If the connection is not blocked, you will see a response from the service. Bear in mind that this may differ depending on whether you are using an NSG deny rule inbound to the database (in our case "cosmos") subnet or are using an NSG deny rule outbound from the web subnet. In the case of a jumpbox, this is likely to be in its own subnet, so will not be impacted by an outbound deny NSG rule from the web subnet.
 
+
+## Flow log setting
+![alt text](images/chaos-nsg-flow-log-setting.png "Flow log setting")
+
 ## Flow log from telnet in jump box
 [NSG Flow logs](https://learn.microsoft.com/en-us/azure/network-watcher/network-watcher-nsg-flow-logging-overview) is a troubleshooting mechanism whereby you can generate logs that are persisted to a storage account - so you verify the effect of a rule on the flow of a specific path.
 
@@ -85,7 +103,7 @@ In the above flow log, you can see a rule "UserRule_DenyAnyHttpsOutbound" being 
 
 In terms of troubleshooting, these [considerations](https://learn.microsoft.com/en-us/azure/network-watcher/network-watcher-nsg-flow-logging-overview#considerations-for-nsg-flow-logs) states that NSG flow logs do not log across a private link. This means if you decided to put a deny flow log inbound to the Cosmos subnet (instead of outbound from the web subnet), then this flow log will not appear. So bear this in mind when attempting to debug a problem with NSG flow logs.
 
-# The Utility of using an NSG as a proxy for other infrastructure faults
+# Summary on the Utility of using an NSG as a proxy for other infrastructure faults
 
 The NSG approach works to block access to the Cosmos database from requests eminating from the web app.
 
