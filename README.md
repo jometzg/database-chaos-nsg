@@ -108,4 +108,14 @@ In terms of troubleshooting, these [considerations](https://learn.microsoft.com/
 
 The NSG approach works to block access to the Cosmos database from requests eminating from the web app. For this approach to work at all, the target of the chaos experiment needs to be in some way inside a VNet so an network security group can be attached to one of the subnets.
 
-There is, however, one major caveat. NSG deny rules only take effect on new network flows. So, if there is a connection already open between the web app, the NSG deny rule will not come into effect until the web app attempts to open a new connection. Further investigation is needed to see how connection pooling in applications can impact the effectiveness of the use of NSGs on a running application that may use connection pooling.
+## Potential caveat
+There is, however, one major caveat. By default, NSG deny rules only take effect on *new* network flows. So, if there is a connection already open between the web app, the NSG deny rule will not come into effect until the web app attempts to open a new connection. 
+
+## Update from the Chaos Studio team
+On further investigation, this has been seen with other use cases and there is a capability on NSGs where an [API call](https://learn.microsoft.com/en-us/dotnet/api/microsoft.azure.management.network.models.networksecuritygroup.flushconnection?view=azure-dotnet) may be used to cause the NSG rules to be evaulated. The chaos team are testing this out. On repeating a load test with this step, the NSG chaos rule does indead work as hoped for.
+
+Above is a load test run where I have highlighted the point at which an NSG Deny chaos experiment has been started - this is using a preview version of this flush feature mentioned above.
+
+![alt text](images/chaos-nsg-flush-nsg-results.png "Load test then an NSG Deny chaos experiment run")
+
+This looks like a successful approach.
